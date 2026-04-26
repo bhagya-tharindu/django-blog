@@ -3,7 +3,7 @@
 - cd blog_project
 - python -m venv venv
 - venv\Scripts\activate
-- pip install django psycopg2-binary
+- pip install django psycopg2-binary django-tailwind
 - update settings.py (add your DB credentials)
 - python manage.py makemigrations
 - python manage.py migrate
