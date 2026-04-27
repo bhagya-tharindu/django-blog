@@ -4,6 +4,10 @@
     {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}" />
     <title>Home - Blog App</title>
   </head>
@@ -14,18 +18,31 @@
         class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center"
       >
         <div>
-          <a href="/" class="text-2xl font-bold text-blue-600"> My Blog </a>
+          <a
+            href="/"
+            class="text-2xl font-bold text-blue-600 flex items-center gap-2"
+          >
+            <i class="fa-solid fa-pen-nib"></i>
+            My Blog
+          </a>
         </div>
 
-        <div class="space-x-6">
-          <a href="/" class="text-gray-700 hover:text-blue-600 font-medium">
+        <div class="flex items-center space-x-6">
+          <a
+            href="/"
+            class="text-gray-700 hover:text-blue-600 font-medium flex items-center gap-2"
+          >
+            <i class="fa-solid fa-house-chimney"></i>
             Home
           </a>
 
+          {% if user.is_authenticated %}
+
           <a
             href="/create/"
-            class="text-gray-700 hover:text-blue-600 font-medium"
+            class="text-gray-700 hover:text-blue-600 font-medium flex items-center gap-2"
           >
+            <i class="fa-solid fa-pen-to-square"></i>
             Create Blog
           </a>
 
@@ -33,20 +50,64 @@
             {% csrf_token %}
             <button
               type="submit"
-              class="text-gray-700 hover:text-red-600 font-medium"
+              class="text-gray-700 hover:text-red-600 font-medium flex items-center gap-2"
             >
+              <i class="fa-solid fa-right-from-bracket"></i>
               Logout
             </button>
           </form>
+
+          {% else %}
+
+          <a
+            href="/accounts/login/"
+            class="text-gray-700 hover:text-blue-600 font-medium flex items-center gap-2"
+          >
+            <i class="fa-solid fa-right-to-bracket"></i>
+            Login
+          </a>
+
+          <a
+            href="/accounts/register/"
+            class="text-gray-700 hover:text-blue-600 font-medium flex items-center gap-2"
+          >
+            <i class="fa-solid fa-user-plus"></i>
+            Sign Up
+          </a>
+
+          {% endif %}
         </div>
       </div>
     </nav>
 
     <!-- Main Content -->
     <div class="max-w-5xl mx-auto mt-10 px-6">
-      <div class="mb-8">
-        <h1 class="text-4xl font-bold text-gray-800">Latest Blog Posts</h1>
-        <p class="text-gray-500 mt-2">Showing the latest 3 posts</p>
+      <div class="mb-8 flex justify-between items-center">
+        <div>
+          <h1 class="text-4xl font-bold text-gray-800">Latest Blog Posts</h1>
+
+          {% if show_all %}
+          <p class="text-gray-500 mt-2">Showing all blog posts</p>
+          {% else %}
+          <p class="text-gray-500 mt-2">Showing latest 3 posts</p>
+          {% endif %}
+        </div>
+
+        {% if show_all %}
+        <a
+          href="/"
+          class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition duration-300"
+        >
+          Show Less
+        </a>
+        {% else %}
+        <a
+          href="/?all=true"
+          class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition duration-300"
+        >
+          Show More
+        </a>
+        {% endif %}
       </div>
 
       <div class="space-y-6">

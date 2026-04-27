@@ -18,11 +18,6 @@ class BlogTests(TestCase):
             author=self.user
         )
 
-    # 🟢 Test login required redirect
-    def test_home_redirect_if_not_logged_in(self):
-        response = self.client.get('/')
-        self.assertEqual(response.status_code, 302)
-
     # 🟢 Test login success
     def test_login(self):
         login = self.client.login(username='testuser', password='testpass123')

@@ -3,10 +3,18 @@ from .models import Post
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 
-@login_required
 def home(request):
-    posts = Post.objects.order_by('-created_at')[:3]
-    return render(request, 'home.html', {'posts': posts})
+    show_all = request.GET.get('all')
+
+    if show_all:
+        posts = Post.objects.all().order_by('-created_at')
+    else:
+        posts = Post.objects.all().order_by('-created_at')[:3]
+
+    return render(request, 'home.html', {
+        'posts': posts,
+        'show_all': show_all
+    })
 
 @login_required
 def create_post(request):
